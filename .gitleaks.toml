@@ -1,0 +1,17 @@
+# Gitleaks allowlist — justified false positives only.
+# Evidence per entry is in the credential-removal record
+# (~/workspace/security-audit/replacement-sections/worker-band-teachaid.md).
+# No live credential is allowlisted here. If a value below ever becomes a
+# real secret, delete its entry and purge it from history instead.
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+
+[[rules.allowlists]]
+description = "THENVOI_API_KEY_2 is an ENVIRONMENT VARIABLE NAME, not a value: tests/conftest_integration.py passes the two names THENVOI_API_KEY / THENVOI_API_KEY_2 to skip_without_envs() so integration tests skip when the vars are unset. No key value exists in the repo; gitleaks matched the name itself as a generic-api-key. Allowlist covers the name only."
+regexTarget = "secret"
+regexes = [
+  '''^THENVOI_API_KEY_2$''',
+]
